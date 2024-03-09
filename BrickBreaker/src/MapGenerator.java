@@ -1,3 +1,5 @@
+import java.awt.*;
+
 public class MapGenerator {
 
     public int map[][];
@@ -15,4 +17,18 @@ public class MapGenerator {
         brickHeight = 150 / row;
     }
 
+    public void Draw(Graphics2D g){
+        for (int i = 0; i < map.length; i++){
+            for (int j = 0; j < map[0].length; j++){
+                if (map[i][j] > 0){
+                    g.setColor(Color.black);
+                    g.fillRect(j*brickWidth+80, i*brickHeight+50, brickWidth, brickHeight);
+
+                    g.setStroke(new BasicStroke(3));
+                    g.setColor(Color.WHITE);
+                    g.drawRect(j*brickWidth+80, i*brickHeight+50, brickWidth, brickHeight);
+                }
+            }
+        }
+    }
 }

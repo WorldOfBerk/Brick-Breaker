@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -27,6 +28,21 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
 
         timer = new Timer(delay, this);
         timer.start();
+    }
+
+    public void Paint(Graphics g){
+        //Setting up background color
+        g.setColor(Color.pink);
+        g.fillRect(1, 1, 692, 592);
+
+        //Drawing map
+        map.Draw((Graphics2D)g);
+
+        //borders
+        g.setColor(Color.YELLOW);
+        g.fillRect(0, 0, 3, 592);
+        g.fillRect(0, 0, 692, 3);
+        g.fillRect(691, 0, 3, 592);
     }
 
     @Override

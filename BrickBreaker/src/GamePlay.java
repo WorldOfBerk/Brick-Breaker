@@ -88,7 +88,51 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        timer.start();
+        if (play){
+            if (new Rectangle(ballPosX, ballPosY, 20, 20).intersects(new Rectangle(playerX, 550, 100, 8))){
+                ballYdirection =-ballYdirection;
+            }
+            A: for (int i = 0; i < map.map.length; i++){
+                for (int j = 0; j < map.map[0].length; j++){
+                   if (map.map[i][j] > 0){
+                       int brickX = j*map.brickHeight+80;
+                       int brickY = i*map.brickHeight+50;
+                       int brickWidth = map.brickWidth;
+                       int brickHeight = map.brickHeight;
 
+                       Rectangle rect = new Rectangle(brickX, brickY, brickWidth, brickHeight);
+                       Rectangle ballRectangle = new Rectangle(ballPosX, ballPosY, 20, 20);
+                       Rectangle brickRectangle = rect;
+                       if (ballRectangle.intersects(brickRectangle)){
+                           map.setBrickValue(0, i, j);
+                           totalBricks--;
+                           score+=5;
+
+                           if (ballPosX+19 < -brickRectangle.x || ballPosX+1 >= brickRectangle.x +brickRectangle.width){
+                               ballXdirection=-ballXdirection;
+                           }
+                           else{
+                               ballYdirection=-ballYdirection;
+                           }
+                           break A;
+                       }
+                   }
+                }
+            }
+            ballPosX+=ballXdirection;
+            ballPosY+=ballYdirection;
+            if (ballPosX < 0){
+                ballXdirection=-ballXdirection;
+            }
+            if (ballPosY < 0){
+                ballYdirection=-ballYdirection;
+            }
+            if (ballPosX > 670){
+                ballXdirection=-ballXdirection;
+            }
+        }
+        repaint();
     }
 
     @Override

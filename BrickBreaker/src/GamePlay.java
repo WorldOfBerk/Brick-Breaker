@@ -56,7 +56,34 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
         //Ball
         g.setColor(Color.RED);
         g.fillOval(ballPosX, ballPosY, 20, 20);
-        
+
+        //Check End conditions
+        if(totalBricks <= 0){
+            //When all bricks are broken, win the game
+            play = false; //stop game
+            ballXdirection = 0;
+            ballYdirection = 0;
+            //Display the winning message on the screen
+            g.setColor(Color.RED);
+            g.setFont(new Font("serif", Font.BOLD, 30));
+            g.drawString("YOU WON; CONGRATS!", 150, 300);
+            g.setFont(new Font("serif", Font.BOLD, 20));
+            g.drawString("Press 'ENTER' to Restart", 230, 350);
+        }
+
+        else if(ballPosY > 570){
+            //When the ball hits the ground, lose the game
+            play = false; //stop game
+            ballXdirection = 0;
+            ballYdirection = 0;
+            //Display the losing message on the screen
+            g.setColor(Color.RED);
+            g.setFont(new Font("serif", Font.BOLD, 30));
+            g.drawString("GAME OVER, YOU LOST!",100, 300);
+            g.setFont(new Font("serif",Font.BOLD,20));
+            g.drawString("Press 'Enter' to Restart",230,350);
+        }
+        g.dispose(); //Dispose of the graphics object
     }
 
     @Override

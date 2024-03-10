@@ -30,13 +30,13 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
         timer.start();
     }
 
-    public void Paint(Graphics g){
+    public void paint(Graphics g){
         //Setting up background color
         g.setColor(Color.pink);
         g.fillRect(1, 1, 692, 592);
 
         //Drawing map
-        map.Draw((Graphics2D)g);
+        map.draw((Graphics2D)g);
 
         //borders
         g.setColor(Color.YELLOW);
@@ -91,12 +91,12 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
         timer.start();
         if (play){
             if (new Rectangle(ballPosX, ballPosY, 20, 20).intersects(new Rectangle(playerX, 550, 100, 8))){
-                ballYdirection =-ballYdirection;
+                ballYdirection=-ballYdirection;
             }
             A: for (int i = 0; i < map.map.length; i++){
                 for (int j = 0; j < map.map[0].length; j++){
                    if (map.map[i][j] > 0){
-                       int brickX = j*map.brickHeight+80;
+                       int brickX = j*map.brickWidth+80;
                        int brickY = i*map.brickHeight+50;
                        int brickWidth = map.brickWidth;
                        int brickHeight = map.brickHeight;
@@ -142,11 +142,53 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode()==KeyEvent.VK_RIGHT){
+            if (playerX >= 600){
+                playerX = 600;
+            }
+            else {
+                moveRight();
+            }
+        }
+        if (e.getKeyCode()==KeyEvent.VK_LEFT){
+            if (playerX < 10){
+                playerX  = 10;
+            }
+            else {
+                moveLeft();
+            }
+        }
+        if (e.getKeyCode()==KeyEvent.VK_ENTER){
+            if (!play){
+                play = true;
+                ballPosX = 120;
+                ballPosY = 350;
+                ballXdirection=-1;
+                ballYdirection=-2;
+                playerX = 310;
+                score = 0;
+                totalBricks = 21;
+                map = new MapGenerator(3, 7);
 
+                repaint();
+            }
+        }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
 
     }
+
+    public void moveRight(){
+        play = true;
+        playerX+=20;
+    }
+
+    public void moveLeft(){
+        play = true;
+        playerX-=20;
+    }
 }
+
+
